@@ -86,3 +86,33 @@ create an Enterprise Hybrid Network
     * Name: vn-spokea
     * Address Range: 10.5.1.0/24
     ![image](./images/3d.png)
+
+## Create Hub to SpokeA Peering
+    * Goal it to be able to get from SpokeA to OnPrem through the Hub
+1. Navigate to the Hub Resource Group > vn-hub > peering > + Add
+
+    ![image](./images/4a.png)
+    * Name of peering from vn-hub to vn-spokea: pr-HubToSpokeA
+    * Virtual Netowrk: vn-spokea
+    * Name of peering from vn-spokea to vn-hub
+    * Allow virutal network acess: Enabled
+    * Allow Forwarded traffic from vn-hub to vn-spokea: Enabled
+    * Allow Forwarded traffic from vn-spokea to vn-hub: Diabled
+    * Allow Gateway transit: Checked
+    ![image](./images/4b.png)
+    ![image](./images/4c.png)
+
+## Create SpokeA to Hub Peering
+    * Goal it to be able to get from SpokeA to OnPrem through the Hub
+1. Navigate to the Hub Resource Group > vn-hub > peering > + Add
+
+    ![image](./images/4a.png)
+    * Name of peering from vn-hub to vn-spokea: pr-HubToSpokeA
+    * Virtual Netowrk: vn-spokea
+    * Name of peering from vn-spokea to vn-hub
+    * Allow virutal network acess: Enabled
+    * Allow Forwarded traffic from vn-hub to vn-spokea: Enabled
+    * Allow Forwarded traffic from vn-spokea to vn-hub: Diabled
+    * Allow Gateway transit: Checked
+    ![image](./images/4b.png)
+    ![image](./images/4c.png)
