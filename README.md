@@ -231,7 +231,7 @@ create an Enterprise Hybrid Network
 
 1. Click on Review + create > Create
 
-## Create SpokeA Network Security Groups
+## Create Network Security Groups
 ### [Back to Excercises](#exercises)
 
 ### Create OnPrem NSG
@@ -290,7 +290,7 @@ create an Enterprise Hybrid Network
     * Click on Subnets > + Associate
     
        ![image](./images/6h.png)
-       
+
     * Virtual Network: vn-spokea
     * Subnet: sn-back
 
