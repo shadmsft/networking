@@ -8,6 +8,12 @@ create an Enterprise Hybrid Network
 * [Create On Premises Network](#create-on-premises-network)
 * [Create Hub Network](#create-the-visual-studio-2017-solution)
 * [Create Spoke Network](#create-models-class-library)
+* [Create Hub to SpokeA Peering](#create-hub-to-spokea-peering)
+* [Create SpokeA to Hub Peering](#create-spokea-to-hub-peering)
+* [Create Virtual Machines](#create-virtual-machines)
+* [Create Network Security Groups](#create-network-security-groups)
+* [Connect OnPrem to Hub via VPN Tunnel](#connect-onprem-to-hub-via-vpn-tunnel)
+
 
 ## Create On Premises Network
 ### [Back to Excercises](#exercises)
@@ -127,100 +133,105 @@ create an Enterprise Hybrid Network
     ![image](./images/4e.png)
     
 
-## Create OnPrem, Hub, SpokeA Virtual Machines
+## Create Machines
 ### [Back to Excercises](#exercises)
 
-1. Create OnPrem VM
-    * Click on + Create Resource in Portal
-    * Choose Windows Server 2016 Datacenter
-    * Basic Config
-        
-        * Resource Group: OnPrem
-        * VM NAme: vm-onprem1
-        * Region: South Central US
-        * Availability Options: No infrastructure redundancy required
-        * Image: Windows Server 2016 Datacenter
-        * Size: Standard DS1 v2
-        * UserName: <yourusername>
-        * Password: <strongpassword>
-        * Public inbound ports: Allowed Selected Ports (RDP)
+### Create OnPrem VM
+1. Click on + Create Resource in Portal
+1. Choose Windows Server 2016 Datacenter
+1. Basic Config
+    
+    * Resource Group: OnPrem
+    * VM NAme: vm-onprem1
+    * Region: South Central US
+    * Availability Options: No infrastructure redundancy required
+    * Image: Windows Server 2016 Datacenter
+    * Size: Standard DS1 v2
+    * UserName: <yourusername>
+    * Password: <strongpassword>
+    * Public inbound ports: Allowed Selected Ports (RDP)
 
-            ![image](./images/5a.png)
-    * Disks
-        * Leave Defaults
+     ![image](./images/5a.png)
+1. Disks
+    * Leave Defaults
 
-            ![image](./images/5b.png)
-    * Network
-        * Virtual Network: vn-onprem
-        * Subnet: sn-back
-        * Public IP: defalut (new vm-onprem1-ip)
-        * Network Security Group: None (we'll add one to the VNET/Subnet Later)
-        * Leave all other defaults
-            ![image](./images/5c.png)
+    ![image](./images/5b.png)
+1. Network
+    * Virtual Network: vn-onprem
+    * Subnet: sn-back
+    * Public IP: defalut (new vm-onprem1-ip)
+    * Network Security Group: None (we'll add one to the VNET/Subnet Later)
+    * Leave all other defaults
 
-    * Click on Review + create > Create
+    ![image](./images/5c.png)
 
-1. Create Hub VM
-    * Click on + Create Resource in Portal
-    * Choose Windows Server 2016 Datacenter
-    * Basic Config
-        
-        * Resource Group: Hub
-        * VM NAme: vm-hub1
-        * Region: South Central US
-        * Availability Options: No infrastructure redundancy required
-        * Image: Windows Server 2016 Datacenter
-        * Size: Standard DS1 v2
-        * UserName: <yourusername>
-        * Password: <strongpassword>
-        * Public inbound ports: Allowed Selected Ports (RDP)
+1. Click on Review + create > Create
 
-            ![image](./images/5d.png)
-    * Disks
-        * Leave Defaults
+### Create Hub VM
+1. Click on + Create Resource in Portal
+1. Choose Windows Server 2016 Datacenter
+1. Basic Config
+    
+    * Resource Group: Hub
+    * VM NAme: vm-hub1
+    * Region: South Central US
+    * Availability Options: No infrastructure redundancy required
+    * Image: Windows Server 2016 Datacenter
+    * Size: Standard DS1 v2
+    * UserName: <yourusername>
+    * Password: <strongpassword>
+    * Public inbound ports: Allowed Selected Ports (RDP)
 
-            ![image](./images/5b.png)
-    * Network
-        * Virtual Network: vn-hub
-        * Subnet: sn-back
-        * Public IP: defalut (new vm-hub1-ip)
-        * Network Security Group: None (we'll add one to the VNET/Subnet Later)
-        * Leave all other defaults
-            ![image](./images/5e.png)
+    ![image](./images/5d.png)
+1. Disks
+    * Leave Defaults
 
-    * Click on Review + create > Create
+    ![image](./images/5b.png)
+1. Network
+    * Virtual Network: vn-hub
+    * Subnet: sn-back
+    * Public IP: defalut (new vm-hub1-ip)
+    * Network Security Group: None (we'll add one to the VNET/Subnet Later)
+    * Leave all other defaults
+    
+    ![image](./images/5e.png)
 
-1. Create SpokeA VM
-    * Click on + Create Resource in Portal
-    * Choose Windows Server 2016 Datacenter
-    * Basic Config
-        
-        * Resource Group: SpokeA
-        * VM NAme: vm-spokea1
-        * Region: South Central US
-        * Availability Options: No infrastructure redundancy required
-        * Image: Windows Server 2016 Datacenter
-        * Size: Standard DS1 v2
-        * UserName: <yourusername>
-        * Password: <strongpassword>
-        * Public inbound ports: Allowed Selected Ports (RDP)
+* Click on Review + create > Create
 
-            ![image](./images/5f.png)
-    * Disks
-        * Leave Defaults
+### Create SpokeA VM
+1. Click on + Create Resource in Portal
+1. Choose Windows Server 2016 Datacenter
+1.  Basic Config
 
-            ![image](./images/5b.png)
-    * Network
-        * Virtual Network: vn-spokea
-        * Subnet: sn-back
-        * Public IP: defalut (new vm-spokea1-ip)
-        * Network Security Group: None (we'll add one to the VNET/Subnet Later)
-        * Leave all other defaults
-            ![image](./images/5g.png)
+    * Resource Group: SpokeA
+    * VM NAme: vm-spokea1
+    * Region: South Central US
+    * Availability Options: No infrastructure redundancy required
+    * Image: Windows Server 2016 Datacenter
+    * Size: Standard DS1 v2
+    * UserName: <yourusername>
+    * Password: <strongpassword>
+    * Public inbound ports: Allowed Selected Ports (RDP)
 
-    * Click on Review + create > Create
+    ![image](./images/5f.png)
 
-## Create OnPrem, Hub, SpokeA Network Security Groups(NSG)
+1. Disks
+    * Leave Defaults
+
+    ![image](./images/5b.png)
+
+1. Network
+    * Virtual Network: vn-spokea
+    * Subnet: sn-back
+    * Public IP: defalut (new vm-spokea1-ip)
+    * Network Security Group: None (we'll add one to the VNET/Subnet Later)
+    * Leave all other defaults
+
+    ![image](./images/5g.png)
+
+1. Click on Review + create > Create
+
+## Create SpokeA Network Security Groups
 ### [Back to Excercises](#exercises)
 
 ### Create OnPrem NSG
@@ -232,16 +243,16 @@ create an Enterprise Hybrid Network
     * Resource Group: OnPrem
     * Location: South Central US
 
-        ![image](./images/6a.png)
-
+    ![image](./images/6a.png)
     * Navigate to Hub Resource Group > nsg-onprem-back 
-    * Click on Subnets > + Associate
-    
-       ![image](./images/6b.png)
+
+    * Click on Subnets > + Associate  
+
+    ![image](./images/6b.png)
     * Virtual Network: vn-onprem
     * Subnet: sn-back
 
-        ![image](./images/6c.png)
+    ![image](./images/6c.png)
 
 ### Create Hub NSG
 
@@ -258,6 +269,7 @@ create an Enterprise Hybrid Network
     * Click on Subnets > + Associate
     
        ![image](./images/6e.png)
+
     * Virtual Network: vn-hub
     * Subnet: sn-back
 
@@ -278,6 +290,7 @@ create an Enterprise Hybrid Network
     * Click on Subnets > + Associate
     
        ![image](./images/6h.png)
+       
     * Virtual Network: vn-spokea
     * Subnet: sn-back
 
