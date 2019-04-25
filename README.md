@@ -133,7 +133,7 @@ create an Enterprise Hybrid Network
     ![image](./images/4e.png)
     
 
-## Create Machines
+## Create Virtual Machines
 ### [Back to Excercises](#exercises)
 
 ### Create OnPrem VM
@@ -300,4 +300,32 @@ create an Enterprise Hybrid Network
 ## Connect OnPrem to Hub via VPN Tunnel
 ### [Back to Excercises](#exercises)
 
-1. 
+### Configure OnPrem VPN Gateway
+1. Navigate to OnPrem Resource Group > vng-onprem
+1. Click on Connections > + Add
+
+    ![image](./images/7a.png)
+
+    * Name: connOnPremToHub
+    * Connection Type: VNet-to-VNet
+    * First virtual network gateway: vng-onprem
+    * Second virtual network gateway: vng-hub
+    * Shared key (PSK): <yourkey> 
+1. Click Ok
+
+    ![image](./images/7b.png)
+
+### Configure Hub VPN Gateway
+1. Navigate to Hub Resource Group > vng-hub
+1. Click on Connections > + Add
+
+    ![image](./images/7c.png)
+
+    * Name: connHubToOnPrem
+    * Connection Type: VNet-to-VNet
+    * First virtual network gateway: vng-hub
+    * Second virtual network gateway: vng-onprem
+    * Shared key (PSK): <yourkey> (same key as above)
+1. Click Ok
+
+    ![image](./images/7d.png)
