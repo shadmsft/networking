@@ -254,6 +254,23 @@ create an Enterprise Hybrid Network
 
     ![image](./images/6c.png)
 
+1. Add Inbound RDP Rule from your IP Address
+    * Type whatismyipaddress in your favorite search engine, make note of your IP address
+    * Click on Inbound Security Rules > + Add
+
+    ![image](./images/6j.png)
+
+    * Source: IP Address
+    * Source IP Addresses/CIDR ranges: <youripaddress>/32 or range
+    * Source port ranges: *
+    * Destination: Any
+    * Destination port ranges: 3389
+    * Protocol: Any
+    * Priority: 100
+    * Name: RDP_3389_Rule
+
+    ![image](./images/6k.png)
+
 ### Create Hub NSG
 
 1. Click on + Create Resource in Portal
@@ -275,6 +292,23 @@ create an Enterprise Hybrid Network
 
         ![image](./images/6f.png)
 
+1. Add Inbound RDP Rule from your IP Address
+    * Type whatismyipaddress in your favorite search engine, make note of your IP address
+    * Click on Inbound Security Rules > + Add
+
+    ![image](./images/6j.png)
+    
+    * Source: IP Address
+    * Source IP Addresses/CIDR ranges: <youripaddress>/32 or range
+    * Source port ranges: *
+    * Destination: Any
+    * Destination port ranges: 3389
+    * Protocol: Any
+    * Priority: 100
+    * Name: RDP_3389_Rule
+
+    ![image](./images/6k.png)
+
 ### Create Spoke NSG
 
 1. Click on + Create Resource in Portal
@@ -295,7 +329,23 @@ create an Enterprise Hybrid Network
     * Subnet: sn-back
 
         ![image](./images/6i.png)
+    
+1. Add Inbound RDP Rule from your IP Address
+    * Type whatismyipaddress in your favorite search engine, make note of your IP address
+    * Click on Inbound Security Rules > + Add
 
+    ![image](./images/6j.png)
+    
+    * Source: IP Address
+    * Source IP Addresses/CIDR ranges: <youripaddress>/32 or range
+    * Source port ranges: *
+    * Destination: Any
+    * Destination port ranges: 3389
+    * Protocol: Any
+    * Priority: 100
+    * Name: RDP_3389_Rule
+
+    ![image](./images/6k.png)
 
 ## Connect OnPrem to Hub via VPN Tunnel
 ### [Back to Excercises](#exercises)
@@ -329,3 +379,17 @@ create an Enterprise Hybrid Network
 1. Click Ok
 
     ![image](./images/7d.png)
+
+1. After some time you should see the status change to connected for each connection.
+
+    ![image](./images/7e.png)
+
+1. Validate the Routes by navigating to the Hub Resource Group > and clicking on the Nick for the vm-hub1 virtual machine.
+
+    ![image](./images/7f.png)
+
+1. Click on the Effective Routes. You should see the routes for the Onprem, Hub, SpokeA, and Internet
+
+    ![image](./images/7f.png)
+
+
