@@ -3,11 +3,15 @@
 
 create an Enterprise Hybrid Network
 
+## Exercises
+
 * [Create On Premises Network](#create-on-premises-network)
 * [Create Hub Network](#create-the-visual-studio-2017-solution)
 * [Create Spoke Network](#create-models-class-library)
 
 ## Create On Premises Network
+### [Back to Excercises](#exercises)
+
 1. Create a Resource Group named OnPrem
     ![image](./images/1a.png)
 1. Create a Virtual Network in the OnPrem Resource Group
@@ -39,6 +43,8 @@ create an Enterprise Hybrid Network
     * Click Review & Create > Create
 
 ## Create Hub Network
+### [Back to Excercises](#exercises)
+
 1. Create a Resource Group named Hub
     ![image](./images/2a.png)
 1. Create a Virtual Network in the Hub Resource Group
@@ -68,7 +74,10 @@ create an Enterprise Hybrid Network
     * Leave all other defaults
     ![image](./images/2f.png)
     * Click Review & Create > Create
+
 ## Create SpokeA Network
+### [Back to Excercises](#exercises)
+
 1. Create a Resource Group named SpokeA
     ![image](./images/3a.png)
 1. Create a Virtual Network in the Hub Resource Group
@@ -88,6 +97,8 @@ create an Enterprise Hybrid Network
     ![image](./images/3d.png)
 
 ## Create Hub to SpokeA Peering
+### [Back to Excercises](#exercises)
+
     * Goal it to be able to get from SpokeA to OnPrem through the Hub
 1. Navigate to the Hub Resource Group > vn-hub > peering > + Add
 
@@ -103,6 +114,8 @@ create an Enterprise Hybrid Network
     ![image](./images/4c.png)
 
 ## Create SpokeA to Hub Peering
+### [Back to Excercises](#exercises)
+
     * Goal it to be able to get from SpokeA to OnPrem through the Hub
 1. Navigate to the SpokeA Resource Group > vn-spokea > peering 
     * Let's validate that the peering is enabled correctly. You should see pr-SpokeAToHub
@@ -115,6 +128,7 @@ create an Enterprise Hybrid Network
     
 
 ## Create OnPrem, Hub, SpokeA Virtual Machines
+### [Back to Excercises](#exercises)
 
 1. Create OnPrem VM
     * Click on + Create Resource in Portal
@@ -205,3 +219,72 @@ create an Enterprise Hybrid Network
             ![image](./images/5g.png)
 
     * Click on Review + create > Create
+
+## Create OnPrem, Hub, SpokeA Network Security Groups(NSG)
+### [Back to Excercises](#exercises)
+
+### Create OnPrem NSG
+
+1. Click on + Create Resource in Portal
+1. Type Network Security Group in Search Box
+1. Select Network Security Group > Create
+    * Name: nsg-onprem-back
+    * Resource Group: OnPrem
+    * Location: South Central US
+
+        ![image](./images/6a.png)
+
+    * Navigate to Hub Resource Group > nsg-onprem-back 
+    * Click on Subnets > + Associate
+    
+       ![image](./images/6b.png)
+    * Virtual Network: vn-onprem
+    * Subnet: sn-back
+
+        ![image](./images/6c.png)
+
+### Create Hub NSG
+
+1. Click on + Create Resource in Portal
+1. Type Network Security Group in Search Box
+1. Select Network Security Group > Create
+    * Name: nsg-hub-back
+    * Resource Group: Hub
+    * Location: South Central US
+
+        ![image](./images/6d.png)
+
+    * Navigate to Hub Resource Group > nsg-hub-back 
+    * Click on Subnets > + Associate
+    
+       ![image](./images/6e.png)
+    * Virtual Network: vn-hub
+    * Subnet: sn-back
+
+        ![image](./images/6f.png)
+
+### Create Spoke NSG
+
+1. Click on + Create Resource in Portal
+1. Type Network Security Group in Search Box
+1. Select Network Security Group > Create
+    * Name: nsg-spokea-back
+    * Resource Group: SpokeA
+    * Location: South Central US
+
+        ![image](./images/6g.png)
+
+    * Navigate to Hub Resource Group > nsg-spokea-back 
+    * Click on Subnets > + Associate
+    
+       ![image](./images/6h.png)
+    * Virtual Network: vn-spokea
+    * Subnet: sn-back
+
+        ![image](./images/6i.png)
+
+
+## Connect OnPrem to Hub via VPN Tunnel
+### [Back to Excercises](#exercises)
+
+1. 
