@@ -104,15 +104,104 @@ create an Enterprise Hybrid Network
 
 ## Create SpokeA to Hub Peering
     * Goal it to be able to get from SpokeA to OnPrem through the Hub
-1. Navigate to the Hub Resource Group > vn-hub > peering > + Add
+1. Navigate to the SpokeA Resource Group > vn-spokea > peering 
+    * Let's validate that the peering is enabled correctly. You should see pr-SpokeAToHub
 
-    ![image](./images/4a.png)
-    * Name of peering from vn-hub to vn-spokea: pr-HubToSpokeA
-    * Virtual Netowrk: vn-spokea
-    * Name of peering from vn-spokea to vn-hub
-    * Allow virutal network acess: Enabled
-    * Allow Forwarded traffic from vn-hub to vn-spokea: Enabled
-    * Allow Forwarded traffic from vn-spokea to vn-hub: Diabled
-    * Allow Gateway transit: Checked
-    ![image](./images/4b.png)
-    ![image](./images/4c.png)
+    ![image](./images/4d.png)
+
+    * Click on pr-SpokeAToHub. You should see that "Use remote gateways" is checked.
+
+    ![image](./images/4e.png)
+    
+
+## Create OnPrem, Hub, SpokeA Virtual Machines
+
+1. Create OnPrem VM
+    * Click on + Create Resource in Portal
+    * Choose Windows Server 2016 Datacenter
+    * Basic Config
+        
+        * Resource Group: OnPrem
+        * VM NAme: vm-onprem1
+        * Region: South Central US
+        * Availability Options: No infrastructure redundancy required
+        * Image: Windows Server 2016 Datacenter
+        * Size: Standard DS1 v2
+        * UserName: <yourusername>
+        * Password: <strongpassword>
+        * Public inbound ports: Allowed Selected Ports (RDP)
+
+            ![image](./images/5a.png)
+    * Disks
+        * Leave Defaults
+
+            ![image](./images/5b.png)
+    * Network
+        * Virtual Network: vn-onprem
+        * Subnet: sn-back
+        * Public IP: defalut (new vm-onprem1-ip)
+        * Network Security Group: None (we'll add one to the VNET/Subnet Later)
+        * Leave all other defaults
+            ![image](./images/5c.png)
+
+    * Click on Review + create > Create
+
+1. Create Hub VM
+    * Click on + Create Resource in Portal
+    * Choose Windows Server 2016 Datacenter
+    * Basic Config
+        
+        * Resource Group: Hub
+        * VM NAme: vm-hub1
+        * Region: South Central US
+        * Availability Options: No infrastructure redundancy required
+        * Image: Windows Server 2016 Datacenter
+        * Size: Standard DS1 v2
+        * UserName: <yourusername>
+        * Password: <strongpassword>
+        * Public inbound ports: Allowed Selected Ports (RDP)
+
+            ![image](./images/5d.png)
+    * Disks
+        * Leave Defaults
+
+            ![image](./images/5b.png)
+    * Network
+        * Virtual Network: vn-hub
+        * Subnet: sn-back
+        * Public IP: defalut (new vm-hub1-ip)
+        * Network Security Group: None (we'll add one to the VNET/Subnet Later)
+        * Leave all other defaults
+            ![image](./images/5e.png)
+
+    * Click on Review + create > Create
+
+1. Create SpokeA VM
+    * Click on + Create Resource in Portal
+    * Choose Windows Server 2016 Datacenter
+    * Basic Config
+        
+        * Resource Group: SpokeA
+        * VM NAme: vm-spokea1
+        * Region: South Central US
+        * Availability Options: No infrastructure redundancy required
+        * Image: Windows Server 2016 Datacenter
+        * Size: Standard DS1 v2
+        * UserName: <yourusername>
+        * Password: <strongpassword>
+        * Public inbound ports: Allowed Selected Ports (RDP)
+
+            ![image](./images/5f.png)
+    * Disks
+        * Leave Defaults
+
+            ![image](./images/5b.png)
+    * Network
+        * Virtual Network: vn-spokea
+        * Subnet: sn-back
+        * Public IP: defalut (new vm-spokea1-ip)
+        * Network Security Group: None (we'll add one to the VNET/Subnet Later)
+        * Leave all other defaults
+            ![image](./images/5g.png)
+
+    * Click on Review + create > Create
