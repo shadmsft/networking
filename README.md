@@ -1,13 +1,26 @@
 # Azure Networking : Enterprise Hybrid Network
 ## Overview
 
-create an Enterprise Hybrid Network
+Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure Portal
+
+### Diagram
+
+![image](./images/0a.png)
 
 ## Exercises
 
+* Create Virtual Network
+* Create VNET Peerings
+* Create Virtual Machines
+* Create Network Security Groups
+* Connect OnPrem to Hub via VPN Tunnel
+* Create Azure Firewall
+* Create User Define Routes and Network Routing Rules
+
 * [Create On Premises Network](#create-on-premises-network)
 * [Create Hub Network](#create-the-visual-studio-2017-solution)
-* [Create Spoke Network](#create-models-class-library)
+* [Create SpokeA Network](#create-spokea-network)
+* [Create SpokePCI Network](#create-spokepci-network)
 * [Create Hub to SpokeA Peering](#create-hub-to-spokea-peering)
 * [Create SpokeA to Hub Peering](#create-spokea-to-hub-peering)
 * [Create Virtual Machines](#create-virtual-machines)
@@ -100,6 +113,27 @@ create an Enterprise Hybrid Network
     ![image](./images/3c.png)
     * Name: vn-spokea
     * Address Range: 10.5.1.0/24
+    ![image](./images/3d.png)
+
+## Create SpokePCI Network
+### [Back to Excercises](#exercises)
+
+1. Create a Resource Group named SpokePCI
+    ![image](./images/3a.png)
+1. Create a Virtual Network in the Hub Resource Group
+    * Name: vn-spokea
+    * Address Space: 10.6.0.0/16
+    * Resource Group: SpokePCI
+    * Region: South Central US
+    * Subnet: sn-back
+    * Subnet Address Range: 10.6.0.0/24
+    * Leave other defaults, they can be changed later
+    ![image](./images/3b.png)
+1. Add a App Subnet to the SpokeA VNet
+    * Click on +Subnet
+    ![image](./images/3c.png)
+    * Name: vn-spokepci
+    * Address Range: 10.6.1.0/24
     ![image](./images/3d.png)
 
 ## Create Hub to SpokeA Peering
