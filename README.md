@@ -3,7 +3,7 @@
 
 Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure Portal
 
-### Diagram
+### Hybrid Hub and Spoke Topology
 
 ![image](./images/0a.png)
 
