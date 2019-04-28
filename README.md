@@ -3,11 +3,12 @@
 
 Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure Portal
 
-### Hybrid Hub and Spoke Topology
+## Hybrid Hub and Spoke Topology
 
 ![image](./images/0a.png)
 
-## Exercises
+# Exercises
+## [Back to Excercises](#exercises)
 
 * [Create Virtual Networks](#create-virtual-networks)
 * [Create VNET Peerings](#create-vnet-peerings)
@@ -22,15 +23,18 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 
 
 # Create Virtual Networks
-## Create On Premises Network
-### [Back to Excercises](#exercises)
+
 * [Create On Premises Network](#create-on-premises-network)
-* [Create Hub Network](#create-the-visual-studio-2017-solution)
+* [Create Hub Network](#create-hub-network)
 * [Create SpokeA Network](#create-spokea-network)
 * [Create SpokePCI Network](#create-spokepci-network)
 
+
+## Create On Premises Network
 1. Create a Resource Group named OnPrem
-    ![image](./images/1a.png)
+
+![image](./images/1a.png)
+
 1. Create a Virtual Network in the OnPrem Resource Group
     * Name: vn-onprem
     * Address Space: 192.168.0.0/16
@@ -39,12 +43,17 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * Subnet: sn-back
     * Subnet Address Range: 192.168.0.0/24
     * Leave other defaults, they can be changed later
-    ![image](./images/1b.png)
+
+![image](./images/1b.png)
+
 1. Add a Gateway Subnet to the OnPrem VNet
     * Click on +Gateway Subnet
-    ![image](./images/1c.png)
+
+![image](./images/1c.png)
+
     * Accept the Defaults
-    ![image](./images/1d.png)
+![image](./images/1d.png)
+
 1. Deploy a VPN Gateway (This will take 30-40 mins)
     * Name: vng-onprem
     * Region: South Central US
@@ -52,18 +61,24 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * VPN Type: Route-Based
     * SKU: VpnGw1
     * Virtual Network: vn-onprem
-    ![image](./images/1e.png)
+
+![image](./images/1e.png)
+
     * Create a new Public IP Address
     * Name: pip-vng-onprem
     * Leave all other defaults
-    ![image](./images/1f.png)
+
+![image](./images/1f.png)
+
     * Click Review & Create > Create
 
 ## Create Hub Network
 ### [Back to Excercises](#exercises)
 
 1. Create a Resource Group named Hub
-    ![image](./images/2a.png)
+
+![image](./images/2a.png)
+
 1. Create a Virtual Network in the Hub Resource Group
     * Name: vn-hub
     * Address Space: 10.4.0.0/16
@@ -72,12 +87,18 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * Subnet: sn-back
     * Subnet Address Range: 10.4.0.0/24
     * Leave other defaults, they can be changed later
-    ![image](./images/2b.png)
+
+![image](./images/2b.png)
+
 1. Add a Gateway Subnet to the Hub VNet
     * Click on +Gateway Subnet
-    ![image](./images/2c.png)
+
+![image](./images/2c.png)
+
     * Accept the Defaults
-    ![image](./images/2d.png)
+
+![image](./images/2d.png)
+
 1. Deploy a VPN Gateway (This will take 30-40 mins)
     * Name: vng-hub
     * Region: South Central US
@@ -85,18 +106,24 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * VPN Type: Route-Based
     * SKU: VpnGw1
     * Virtual Network: vn-hub
-    ![image](./images/2e.png)
+
+![image](./images/2e.png)
+
     * Create a new Public IP Address
     * Name: pip-vng-hub
     * Leave all other defaults
-    ![image](./images/2f.png)
+
+![image](./images/2f.png)
+
     * Click Review & Create > Create
 
 ## Create SpokeA Network
 ### [Back to Excercises](#exercises)
 
 1. Create a Resource Group named SpokeA
-    ![image](./images/3a.png)
+
+![image](./images/3a.png)
+
 1. Create a Virtual Network in the Hub Resource Group
     * Name: vn-spokea
     * Address Space: 10.5.0.0/16
@@ -105,86 +132,101 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * Subnet: sn-back
     * Subnet Address Range: 10.5.0.0/24
     * Leave other defaults, they can be changed later
-    ![image](./images/3b.png)
-1. Add a App Subnet to the SpokeA VNet
-    * Click on +Subnet
-    ![image](./images/3c.png)
-    * Name: vn-spokea
-    * Address Range: 10.5.1.0/24
-    ![image](./images/3d.png)
+
+![image](./images/3b.png)
 
 ## Create SpokePCI Network
 ### [Back to Excercises](#exercises)
 
 1. Create a Resource Group named SpokePCI
-    ![image](./images/3a.png)
+
+![image](./images/3aPCI.png)
+
 1. Create a Virtual Network in the Hub Resource Group
-    * Name: vn-spokea
+    * Name: vn-spokepci
     * Address Space: 10.6.0.0/16
     * Resource Group: SpokePCI
     * Region: South Central US
     * Subnet: sn-back
     * Subnet Address Range: 10.6.0.0/24
     * Leave other defaults, they can be changed later
-    ![image](./images/3b.png)
-1. Add a App Subnet to the SpokeA VNet
-    * Click on +Subnet
-    ![image](./images/3c.png)
-    * Name: vn-spokepci
-    * Address Range: 10.6.1.0/24
-    ![image](./images/3d.png)
+
+![image](./images/3bPCI.png)
+
 
 # Create VNET Peerings
-### [Back to Excercises](#exercises)
+## [Back to Excercises](#exercises)
 * [Create Hub to Spoke Peering](#create-hub-to-spokea-peering)
-* [Create Spoke to Hub Peering](#create-spokea-to-hub-peering)
+* [Validate Spoke to Hub Peering](#validate-spoke-to-hub-peering)
 
 
 ## Create Hub to Spoke Peering
-    * Goal it to be able to get from SpokeA to OnPrem through the Hub
+    * Goal is to be able to get from SpokeA to OnPrem through the Hub
 1. Navigate to the Hub Resource Group > vn-hub > peering > + Add
 
-    ![image](./images/4a.png)
+![image](./images/4a.png)
+
     * Name of peering from vn-hub to vn-spokea: pr-HubToSpokeA
     * Virtual Netowrk: vn-spokea
-    * Name of peering from vn-spokea to vn-hub
+    * Name of peering from vn-spokea to vn-hub: pr-SpokeAToHub
     * Allow virutal network acess: Enabled
     * Allow Forwarded traffic from vn-hub to vn-spokea: Enabled
     * Allow Forwarded traffic from vn-spokea to vn-hub: Diabled
     * Allow Gateway transit: Checked
-    ![image](./images/4b.png)
-    ![image](./images/4c.png)
 
-## Create Spoke to Hub Peering
+![image](./images/4b.png)
+![image](./images/4c.png)
+
+1. Navigate to the Hub Resource Group > vn-hub > peering > + Add
+
+![image](./images/4a.png)
+
+    * Name of peering from vn-hub to vn-spokepci: pr-HubToSpokePCI
+    * Virtual Netowrk: vn-spokea
+    * Name of peering from vn-spokea to vn-hub: pr-SpokePCIToHub
+    * Allow virutal network acess: Enabled
+    * Allow Forwarded traffic from vn-hub to vn-spokepci: Enabled
+    * Allow Forwarded traffic from vn-spokepci to vn-hub: Diabled
+    * Allow Gateway transit: Checked
+    
+![image](./images/4b1.png)
+    
+
+## Validate Spoke to Hub Peering
 ### [Back to Excercises](#exercises)
 
     * Goal it to be able to get from SpokeA to SpokePCI and vise versa through the Hub
 1. Navigate to the SpokeA Resource Group > vn-spokea > peering 
     * Let's validate that the peering is enabled correctly. You should see pr-SpokeAToHub
 
-    ![image](./images/4d.png)
+![image](./images/4d.png)
 
     * Click on pr-SpokeAToHub. You should see that "Use remote gateways" is checked.
 
-    ![image](./images/4e.png)
+![image](./images/4e.png)
 
 1. Navigate to the SpokeA Resource Group > vn-spokepci > peering 
-    * Let's validate that the peering is enabled correctly. You should see pr-SpokeAToHub
+    * Let's validate that the peering is enabled correctly. You should see pr-SpokePCIToHub
 
-    ![image](./images/4d.png)
+![image](./images/4d1.png)
 
-    * Click on pr-SpokeAToHub. You should see that "Use remote gateways" is checked.
+    * Click on pr-SpokePCIToHub. You should see that "Use remote gateways" is checked.
 
-    ![image](./images/4e.png)
+![image](./images/4e1.png)
 
-## Create Virtual Machines
-### [Back to Excercises](#exercises)
+# Create Virtual Machines
+## [Back to Excercises](#exercises)
 
-### Create OnPrem VM
+* [Create OnPrem VM](#create-onprem-vm)
+* [Create Hub VM](#create-hub-vm)
+* [Create SpokeA VM](#create-spokea-vm)
+* [Create SpokePCI VMs](#create-spokepci-vms)
+
+
+## Create OnPrem VM
 1. Click on + Create Resource in Portal
 1. Choose Windows Server 2016 Datacenter
 1. Basic Config
-    
     * Resource Group: OnPrem
     * VM NAme: vm-onprem1
     * Region: South Central US
@@ -194,28 +236,23 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * UserName: <yourusername>
     * Password: <strongpassword>
     * Public inbound ports: Allowed Selected Ports (RDP)
-
-     ![image](./images/5a.png)
+![image](./images/5a.png)
 1. Disks
     * Leave Defaults
-
-    ![image](./images/5b.png)
+![image](./images/5b.png)
 1. Network
     * Virtual Network: vn-onprem
     * Subnet: sn-back
     * Public IP: defalut (new vm-onprem1-ip)
     * Network Security Group: None (we'll add one to the VNET/Subnet Later)
     * Leave all other defaults
-
-    ![image](./images/5c.png)
-
+![image](./images/5c.png)
 1. Click on Review + create > Create
 
-### Create Hub VM
+## Create Hub VM
 1. Click on + Create Resource in Portal
 1. Choose Windows Server 2016 Datacenter
 1. Basic Config
-    
     * Resource Group: Hub
     * VM NAme: vm-hub1
     * Region: South Central US
@@ -225,28 +262,23 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * UserName: <yourusername>
     * Password: <strongpassword>
     * Public inbound ports: Allowed Selected Ports (RDP)
-
-    ![image](./images/5d.png)
+![image](./images/5d.png)
 1. Disks
     * Leave Defaults
-
-    ![image](./images/5b.png)
+![image](./images/5b.png)
 1. Network
     * Virtual Network: vn-hub
     * Subnet: sn-back
     * Public IP: defalut (new vm-hub1-ip)
     * Network Security Group: None (we'll add one to the VNET/Subnet Later)
     * Leave all other defaults
-    
-    ![image](./images/5e.png)
+![image](./images/5e.png)
+1. Click on Review + create > Create
 
-* Click on Review + create > Create
-
-### Create SpokeA VM
+## Create SpokeA VM
 1. Click on + Create Resource in Portal
 1. Choose Windows Server 2016 Datacenter
 1.  Basic Config
-
     * Resource Group: SpokeA
     * VM NAme: vm-spokea1
     * Region: South Central US
@@ -256,29 +288,56 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * UserName: <yourusername>
     * Password: <strongpassword>
     * Public inbound ports: Allowed Selected Ports (RDP)
-
-    ![image](./images/5f.png)
-
+![image](./images/5f.png)
 1. Disks
     * Leave Defaults
-
-    ![image](./images/5b.png)
-
+![image](./images/5b.png)
 1. Network
     * Virtual Network: vn-spokea
     * Subnet: sn-back
     * Public IP: defalut (new vm-spokea1-ip)
     * Network Security Group: None (we'll add one to the VNET/Subnet Later)
     * Leave all other defaults
-
-    ![image](./images/5g.png)
-
+![image](./images/5g.png)
 1. Click on Review + create > Create
 
-## Create Network Security Groups
-### [Back to Excercises](#exercises)
+## Create SpokePCI VMs
+1. Click on + Create Resource in Portal
+1. Choose Windows Server 2016 Datacenter
+1.  Basic Config
 
-### Create OnPrem NSG
+    * Resource Group: SpokePCI
+    * VM NAme: vm-spokepci1
+    * Region: South Central US
+    * Availability Options: No infrastructure redundancy required
+    * Image: Windows Server 2016 Datacenter
+    * Size: Standard DS1 v2
+    * UserName: <yourusername>
+    * Password: <strongpassword>
+    * Public inbound ports: Allowed Selected Ports (RDP)
+![image](./images/5f1.png)
+1. Disks
+    * Leave Defaults
+![image](./images/5b.png)
+1. Network
+    * Virtual Network: vn-spokepci
+    * Subnet: sn-back
+    * Public IP: defalut (new vm-spokepci1-ip)
+    * Network Security Group: None (we'll add one to the VNET/Subnet Later)
+    * Leave all other defaults
+![image](./images/5g1.png)
+1. Click on Review + create > Create
+1. Repeat the previous 6 steps to create a 2nd VM in the vn-spokepci VNet. However, this time replace the name of the vm name with: <b>vm-spokepci2</b>
+
+# Create Network Security Groups
+## [Back to Excercises](#exercises)
+
+* [Create OnPrem NSG](#create-onprem-nsg)
+* [Create Hub NSG](#create-hub-nsg)
+* [Create SpokeA NSG](#create-spokea-nsg)
+* [Create SpokePCI NSG](#create-spokepci-nsg)
+
+## Create OnPrem NSG
 
 1. Click on + Create Resource in Portal
 1. Type Network Security Group in Search Box
@@ -287,22 +346,24 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * Resource Group: OnPrem
     * Location: South Central US
 
-    ![image](./images/6a.png)
+![image](./images/6a.png)
+
     * Navigate to Hub Resource Group > nsg-onprem-back 
 
     * Click on Subnets > + Associate  
 
-    ![image](./images/6b.png)
+![image](./images/6b.png)
+
     * Virtual Network: vn-onprem
     * Subnet: sn-back
 
-    ![image](./images/6c.png)
+![image](./images/6c.png)
 
 1. Add Inbound RDP Rule from your IP Address
     * Type whatismyipaddress in your favorite search engine, make note of your IP address
     * Click on Inbound Security Rules > + Add
 
-    ![image](./images/6j.png)
+![image](./images/6j.png)
 
     * Source: IP Address
     * Source IP Addresses/CIDR ranges: <youripaddress>/32 or range
@@ -313,7 +374,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * Priority: 100
     * Name: RDP_3389_Rule
 
-    ![image](./images/6k.png)
+![image](./images/6k.png)
 
 ### Create Hub NSG
 
@@ -324,23 +385,23 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * Resource Group: Hub
     * Location: South Central US
 
-        ![image](./images/6d.png)
+![image](./images/6d.png)
 
     * Navigate to Hub Resource Group > nsg-hub-back 
     * Click on Subnets > + Associate
     
-       ![image](./images/6e.png)
+![image](./images/6e.png)
 
     * Virtual Network: vn-hub
     * Subnet: sn-back
 
-        ![image](./images/6f.png)
+![image](./images/6f.png)
 
 1. Add Inbound RDP Rule from your IP Address
     * Type whatismyipaddress in your favorite search engine, make note of your IP address
     * Click on Inbound Security Rules > + Add
 
-    ![image](./images/6j.png)
+![image](./images/6j.png)
     
     * Source: IP Address
     * Source IP Addresses/CIDR ranges: <youripaddress>/32 or range
@@ -351,9 +412,9 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * Priority: 100
     * Name: RDP_3389_Rule
 
-    ![image](./images/6k.png)
+![image](./images/6k.png)
 
-### Create Spoke NSG
+### Create SpokeA NSG
 
 1. Click on + Create Resource in Portal
 1. Type Network Security Group in Search Box
@@ -362,23 +423,23 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * Resource Group: SpokeA
     * Location: South Central US
 
-        ![image](./images/6g.png)
+![image](./images/6g.png)
 
     * Navigate to Hub Resource Group > nsg-spokea-back 
     * Click on Subnets > + Associate
     
-       ![image](./images/6h.png)
+![image](./images/6h.png)
 
     * Virtual Network: vn-spokea
     * Subnet: sn-back
 
-        ![image](./images/6i.png)
+![image](./images/6i.png)
     
 1. Add Inbound RDP Rule from your IP Address
     * Type whatismyipaddress in your favorite search engine, make note of your IP address
     * Click on Inbound Security Rules > + Add
 
-    ![image](./images/6j.png)
+![image](./images/6j.png)
     
     * Source: IP Address
     * Source IP Addresses/CIDR ranges: <youripaddress>/32 or range
@@ -389,7 +450,45 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * Priority: 100
     * Name: RDP_3389_Rule
 
-    ![image](./images/6k.png)
+![image](./images/6k.png)
+
+### Create SpokePCI NSG
+
+1. Click on + Create Resource in Portal
+1. Type Network Security Group in Search Box
+1. Select Network Security Group > Create
+    * Name: nsg-spokepci-back
+    * Resource Group: SpokePCI
+    * Location: South Central US
+
+![image](./images/6g1.png)
+
+    * Navigate to Hub Resource Group > nsg-spokepci-back 
+    * Click on Subnets > + Associate
+    
+![image](./images/6h1.png)
+
+    * Virtual Network: vn-spokepci
+    * Subnet: sn-back
+
+![image](./images/6k1.png)
+    
+1. Add Inbound RDP Rule from your IP Address
+    * Type whatismyipaddress in your favorite search engine, make note of your IP address
+    * Click on Inbound Security Rules > + Add
+
+![image](./images/6j.png)
+    
+    * Source: IP Address
+    * Source IP Addresses/CIDR ranges: <youripaddress>/32 or range
+    * Source port ranges: *
+    * Destination: Any
+    * Destination port ranges: 3389
+    * Protocol: Any
+    * Priority: 100
+    * Name: RDP_3389_Rule
+
+![image](./images/6k.png)
 
 ## Connect OnPrem to Hub via VPN Tunnel
 ### [Back to Excercises](#exercises)
@@ -398,7 +497,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 1. Navigate to OnPrem Resource Group > vng-onprem
 1. Click on Connections > + Add
 
-    ![image](./images/7a.png)
+![image](./images/7a.png)
 
     * Name: connOnPremToHub
     * Connection Type: VNet-to-VNet
@@ -407,35 +506,25 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * Shared key (PSK): <yourkey> 
 1. Click Ok
 
-    ![image](./images/7b.png)
+![image](./images/7b.png)
 
 ### Configure Hub VPN Gateway
 1. Navigate to Hub Resource Group > vng-hub
 1. Click on Connections > + Add
-
-    ![image](./images/7c.png)
-
+    * ![image](./images/7c.png)
     * Name: connHubToOnPrem
     * Connection Type: VNet-to-VNet
     * First virtual network gateway: vng-hub
     * Second virtual network gateway: vng-onprem
     * Shared key (PSK): <yourkey> (same key as above)
 1. Click Ok
-
-    ![image](./images/7d.png)
-
+    * ![image](./images/7d.png)
 1. After some time you should see the status change to connected for each connection.
-
-    ![image](./images/7e.png)
-
+    * ![image](./images/7e.png)
 1. Validate the Routes by navigating to the Hub Resource Group > and clicking on the Nick for the vm-hub1 virtual machine.
-
-    ![image](./images/7f.png)
-
+    * ![image](./images/7f.png)
 1. Click on the Effective Routes. You should see the routes for the Onprem, Hub, SpokeA, and Internet
-
-    ![image](./images/7f.png)
-
+    * ![image](./images/7f.png)
 
 # Create Azure Firewall
 # Create User Defined Routes and Network Routing Rules
