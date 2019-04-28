@@ -17,10 +17,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 * [Connect OnPrem to Hub via VPN Tunnel](#connect-onprem-to-hub-via-vpn-tunnel)
 * [Create Azure Firewall](#create-azure-firewall)
 * [Create User Defined Routes and Network Routing Rules](#create-user-defined-routes-and-network-routing-rules)
-
-
-
-
+* [Create Application Security Groups for Microsegmentation](#Create-Application-Security-Groups-for-Microsegmentation)
 
 # Create Virtual Networks
 
@@ -491,7 +488,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 ![image](./images/6k.png)
 
 ## Connect OnPrem to Hub via VPN Tunnel
-### [Back to Excercises](#exercises)
+## [Back to Excercises](#exercises)
 
 ### Configure OnPrem VPN Gateway
 1. Navigate to OnPrem Resource Group > vng-onprem
@@ -527,5 +524,97 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * ![image](./images/7f.png)
 
 # Create Azure Firewall
+## [Back to Excercises](#exercises)
+
+1. Click on + Create Resource in Portal
+1. Type firewall in the search box 
+1. Create an AzureFirewallSubnet in the vn-hub virtual network
+    * ![image](./images/8a.png)
+1. Type Firewall Group in Search Box
+    * Resource group: Hub
+    * Name: azfw-hub
+    * Region: South Central US
+    * Choose a virtual network: Use Existing
+    * Virtual Network: vn-hub
+    * Public IP address: Create new
+    * Public IP address name: azureFirewalls-ip
+1. Navigate to the created Azure Firewall and note the Private IP Address
+    * ![image](./images/8b.png)
+
+
 # Create User Defined Routes and Network Routing Rules
 
+## Create User Defined Routes
+
+### Create SpokeA User Defined Route Table
+1. Click on + Create Resource in Portal
+1. Type Route Table in the search box
+1. Click Route Table > Create
+    * Name: udr-SpokeA
+    * Resource Group SpokeA
+    * Location: South Central US
+    * Virtual network gateway route propagation: Enabled
+    * ![image](./images/9a.png)
+1. Navigate to the created route table and create a new Route
+    * ![image](./images/9d.png)
+    * Route Name: routeSpokeAToHubFW
+    * Address Prefix: 10.6.0.0/16
+    * Next Hop Type: Virtual Appliance
+    * Next Hop Address: 10.4.2.4
+    * ![image](./images/9e.png)
+1. Now associate the route table to the sn-back subnet in vn-spokea
+    * ![image](./images/9f.png)
+    * Virtual Network: vn-spokea
+    * Subnet: sn-back
+    * ![image](./images/9g.png)
+
+### Create SpokePCI User Defined Route Table
+1. Click on + Create Resource in Portal
+1. Type Route Table in the search box
+1. Click Route Table > Create
+    * Name: udr-SpokePCI
+    * Resource Group SpokePCI
+    * Location: South Central US
+    * Virtual network gateway route propagation: Enabled
+    * ![image](./images/10a.png)
+1. Navigate to the created route table and create a new Route
+    * ![image](./images/10b.png)
+    * Route Name: routeSpokePCIToHubFW
+    * Address Prefix: 10.5.0.0/16
+    * Next Hop Type: Virtual Appliance
+    * Next Hop Address: 10.4.2.4
+    * ![image](./images/10c.png)
+1. Now associate the route table to the sn-back subnet in vn-spokea
+    * ![image](./images/10d.png)
+    * Virtual Network: vn-spokepci
+    * Subnet: sn-back
+    * ![image](./images/10e.png)
+
+### Create Azure Firewall Network Rule
+1. Navigate to the Azure Firewall and create a network rule
+    * ![image](./images/9b.png)
+    * Name: firewallRule
+    * Priority: 100
+    * Action: Allow
+    * Rules 1:
+        * Name: SpokeA-To-SpokePCI
+        * Protocol: Any
+        * Source Addresses: 10.5.0.0/16
+        * Destination Addresses: 10.6.0.0/16
+        * Destination Ports: * 
+    * Rules 2:
+        * Name: SpokePCI-To-SpokeA
+        * Protocol: Any
+        * Source Addresses: 10.6.0.0/16
+        * Destination Addresses: 10.5.0.0/16
+        * Destination Ports: *
+    * ![image](./images/9c.png)
+
+
+# Create Application Security Groups for Microsegmentation
+## [Back to Excercises](#exercises)
+
+* Goal is to create Microsegmentation between vm-spokepci1 and vm-spokepci2. We do not want them to be able to communicate with each other. So we will use Application Security Groups (ASGs) to accomplish this.
+
+## Create ASG for vm-spokepci1
+1. 
