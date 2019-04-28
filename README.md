@@ -9,27 +9,25 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 
 ## Exercises
 
-* Create Virtual Network
-* Create VNET Peerings
-* Create Virtual Machines
-* Create Network Security Groups
-* Connect OnPrem to Hub via VPN Tunnel
-* Create Azure Firewall
-* Create User Define Routes and Network Routing Rules
+* [Create Virtual Networks](#create-virtual-networks)
+* [Create VNET Peerings](#create-vnet-peerings)
+* [Create Virtual Machines](#create-virtual-machines)
+* [Create Network Security Groups](#create-network-security-groups)
+* [Connect OnPrem to Hub via VPN Tunnel](#connect-onprem-to-hub-via-vpn-tunnel)
+* [Create Azure Firewall](#create-azure-firewall)
+* [Create User Defined Routes and Network Routing Rules](#create-user-defined-routes-and-network-routing-rules)
 
+
+
+
+
+# Create Virtual Networks
+## Create On Premises Network
+### [Back to Excercises](#exercises)
 * [Create On Premises Network](#create-on-premises-network)
 * [Create Hub Network](#create-the-visual-studio-2017-solution)
 * [Create SpokeA Network](#create-spokea-network)
 * [Create SpokePCI Network](#create-spokepci-network)
-* [Create Hub to SpokeA Peering](#create-hub-to-spokea-peering)
-* [Create SpokeA to Hub Peering](#create-spokea-to-hub-peering)
-* [Create Virtual Machines](#create-virtual-machines)
-* [Create Network Security Groups](#create-network-security-groups)
-* [Connect OnPrem to Hub via VPN Tunnel](#connect-onprem-to-hub-via-vpn-tunnel)
-
-
-## Create On Premises Network
-### [Back to Excercises](#exercises)
 
 1. Create a Resource Group named OnPrem
     ![image](./images/1a.png)
@@ -47,7 +45,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     ![image](./images/1c.png)
     * Accept the Defaults
     ![image](./images/1d.png)
-1. Deploy a VPN Gateway (This will take 3-40 mins)
+1. Deploy a VPN Gateway (This will take 30-40 mins)
     * Name: vng-onprem
     * Region: South Central US
     * Gateway Type: VPN
@@ -80,7 +78,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     ![image](./images/2c.png)
     * Accept the Defaults
     ![image](./images/2d.png)
-1. Deploy a VPN Gateway (This will take 3-40 mins)
+1. Deploy a VPN Gateway (This will take 30-40 mins)
     * Name: vng-hub
     * Region: South Central US
     * Gateway Type: VPN
@@ -136,9 +134,13 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * Address Range: 10.6.1.0/24
     ![image](./images/3d.png)
 
-## Create Hub to SpokeA Peering
+# Create VNET Peerings
 ### [Back to Excercises](#exercises)
+* [Create Hub to Spoke Peering](#create-hub-to-spokea-peering)
+* [Create Spoke to Hub Peering](#create-spokea-to-hub-peering)
 
+
+## Create Hub to Spoke Peering
     * Goal it to be able to get from SpokeA to OnPrem through the Hub
 1. Navigate to the Hub Resource Group > vn-hub > peering > + Add
 
@@ -153,10 +155,10 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     ![image](./images/4b.png)
     ![image](./images/4c.png)
 
-## Create SpokeA to Hub Peering
+## Create Spoke to Hub Peering
 ### [Back to Excercises](#exercises)
 
-    * Goal it to be able to get from SpokeA to OnPrem through the Hub
+    * Goal it to be able to get from SpokeA to SpokePCI and vise versa through the Hub
 1. Navigate to the SpokeA Resource Group > vn-spokea > peering 
     * Let's validate that the peering is enabled correctly. You should see pr-SpokeAToHub
 
@@ -165,7 +167,15 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * Click on pr-SpokeAToHub. You should see that "Use remote gateways" is checked.
 
     ![image](./images/4e.png)
-    
+
+1. Navigate to the SpokeA Resource Group > vn-spokepci > peering 
+    * Let's validate that the peering is enabled correctly. You should see pr-SpokeAToHub
+
+    ![image](./images/4d.png)
+
+    * Click on pr-SpokeAToHub. You should see that "Use remote gateways" is checked.
+
+    ![image](./images/4e.png)
 
 ## Create Virtual Machines
 ### [Back to Excercises](#exercises)
@@ -426,4 +436,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 
     ![image](./images/7f.png)
 
+
+# Create Azure Firewall
+# Create User Defined Routes and Network Routing Rules
 
