@@ -625,7 +625,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 1. Validate Connectivity between vm-spokepci1 and vm-spokepcivm2 has been blocked
     * ![image](./images/12c.png)
     
-# Network Automation Samples and References]
+# Network Automation Samples and References
 
 ## PowerShell
 The following table includes links to Azure Powershell scripts:
