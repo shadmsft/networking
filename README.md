@@ -15,11 +15,14 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 * [Create Virtual Machines](#create-virtual-machines)
 * [Create Network Security Groups](#create-network-security-groups)
 * [Connect OnPrem to Hub via VPN Tunnel](#connect-onprem-to-hub-via-vpn-tunnel)
+* [Check Connectivity](#check-connectivity)
 * [Create Azure Firewall](#create-azure-firewall)
 * [Create User Defined Routes and Network Routing Rules](#create-user-defined-routes-and-network-routing-rules)
+* [Check SpokeA to Hub to SpokePCI Connectivity](#Check-SpokeA-to-Hub-to-SpokePCI-Connectivity)
 * [Create Application Security Groups for Microsegmentation](#Create-Application-Security-Groups-for-Microsegmentation)
 
 # Create Virtual Networks
+## [Back to Excercises](#exercises)
 
 * [Create On Premises Network](#create-on-premises-network)
 * [Create Hub Network](#create-hub-network)
@@ -28,6 +31,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 
 
 ## Create On Premises Network
+
 1. Create a Resource Group named OnPrem
 
 ![image](./images/1a.png)
@@ -523,6 +527,32 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 1. Click on the Effective Routes. You should see the routes for the Onprem, Hub, SpokeA, and Internet
     * ![image](./images/7f.png)
 
+# Check Connectivity
+## [Back to Excercises](#exercises)
+1. RDP into the following VMs
+    * vm-onprem1 
+    * vm-hub1 
+    * vm-spokea1
+    * vm-spokepci1
+    * vm-spokepci2
+1. You will need to enable icmp or disable the guest firewall on the OS.
+    * To enable icmp you can run the following command from PowerShell (Run as Administrator) on each Virtual Machine
+    ```powershell
+    New-NetFirewallRule –DisplayName “Allow ICMPv4-In” –Protocol ICMPv4
+    ```
+1. Ping test from vm-onprem1 to vm-hub1, vm-spokea1, vm-spokepci1, vm-spokepci2
+    * ![image](./images/pta.png)
+1. Ping test from vm-hub1, vm-spokea1, vm-spokepci1, vm-spokepci2 to vm-onprem1
+    * ![image](./images/ptb.png)
+    * ![image](./images/ptc.png)
+    * ![image](./images/ptd.png)
+    * ![image](./images/pte.png)
+1. Validate that SpokeA cannot communicate with SpokePCI and vice versa
+    * Ping test from vm-spokea1 to vm-spokepci1
+        * ![image](./images/ptf.png)
+    * Ping test from vm-spokepci1 to vm-spokea1
+        * ![image](./images/ptg.png)
+
 # Create Azure Firewall
 ## [Back to Excercises](#exercises)
 
@@ -543,7 +573,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 
 
 # Create User Defined Routes and Network Routing Rules
-
+## [Back to Excercises](#exercises)
 ## Create User Defined Routes
 
 ### Create SpokeA User Defined Route Table
@@ -610,6 +640,24 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
         * Destination Ports: *
     * ![image](./images/9c.png)
 
+# Check SpokeA to Hub to SpokePCI Connectivity
+## [Back to Excercises](#exercises)
+* Let's validate that we can now route traffic from SpokeA to SpokePCI and vice vera
+1. RDP into the following VMs
+    * vm-spokea1
+    * vm-spokepci1
+    * vm-spokepci2
+1. You will need to enable icmp or disable the guest firewall on the OS.
+    * To enable icmp you can run the following command from PowerShell (Run as Administrator) on each Virtual Machine
+    ```powershell
+    New-NetFirewallRule –DisplayName “Allow ICMPv4-In” –Protocol ICMPv4
+    ```
+1. Ping test from vm-spokea1 to vm-spokepci1 and vm-spokepci2
+    * ![image](./images/pth.png)
+1. Ping test from vm-spokepci1, vm-spokepci2 to vm-spokea1
+    * ![image](./images/pti.png)
+    * ![image](./images/ptj.png)
+
 
 # Create Application Security Groups for Microsegmentation
 ## [Back to Excercises](#exercises)
@@ -617,4 +665,48 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 * Goal is to create Microsegmentation between vm-spokepci1 and vm-spokepci2. We do not want them to be able to communicate with each other. So we will use Application Security Groups (ASGs) to accomplish this.
 
 ## Create ASG for vm-spokepci1
-1. 
+1. Click on + Create Resource in Portal
+1. Type Application Secruity Group in the Search Box
+1. Select Application Security Group > Create
+    * Resource Group: SpokePCI
+    * Name: asg-vm-spokepci1
+    * Region: South Central US
+    * ![image](./images/11a.png)
+1. Click on + Create Resource in Portal
+1. Select Application Security Group > Create
+    * Resource Group: SpokePCI
+    * Name: asg-vm-spokepci2
+    * Region: South Central US
+    * ![image](./images/11b.png)
+1. Validate Connectivity between vm-spokepci1 and vm-spokepcivm2
+    * ![image](./images/11c.png)
+    * ![image](./images/11d.png)
+
+## Associate the VMs with the ASGs
+1. Associate vm-spokepci1 to asg-spokepci1
+1. Navigate to vm-spokepci1 > Networking > Application Secruity Groups >  Configure the applicaiton security groups
+    * ![image](./images/11e.png)
+    * Select asg-vm-spokepci1 and click Save
+    * ![image](./images/11f.png)
+1. Navigate to vm-spokepci2 > Networking > Application Secruity Groups >  Configure the applicaiton security groups
+    * ![image](./images/11g.png)
+    * Select asg-vm-spokepci2 and click Save
+    * ![image](./images/11h.png)
+
+## Create NSG Rules using ASGs for Microsegmentation
+1. Navigate to nsg-spokepci-back > Inbound Security Rules > + Add
+    * ![image](./images/12a.png)
+    * Source: Application Security Group
+    * Source ASG: asg-vm-spokepci1
+    * Source port ranges: *
+    * Destination: Application Security Group
+    * Destination ASG: asg-vm-spokepci2
+    * Destination: *
+    * Protocol: Any
+    * Action: Deny
+    * Priority: 110
+    * Name: DenyVmspokepci1ToVmspokepci2
+    * ![image](./images/12b.png)
+1. Validate Connectivity between vm-spokepci1 and vm-spokepcivm2 has been blocked
+    * ![image](./images/12c.png)
+    
