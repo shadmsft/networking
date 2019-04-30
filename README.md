@@ -470,9 +470,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 
 # Create Azure Firewall
 ## [Back to Excercises](#exercises)
-
-1. Click on + Create Resource in Portal
-1. Type firewall in the search box 
+ 
 1. Create an AzureFirewallSubnet in the vn-hub virtual network
     * ![image](./images/8a.png)
 1. Type Firewall Group in Search Box
