@@ -101,7 +101,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 
 1. Create a Resource Group named SpokeA
 ![image](./images/3a.png)
-1. Create a Virtual Network in the Hub Resource Group
+1. Create a Virtual Network in the SpokeA Resource Group
     * Name: vn-spokea
     * Address Space: 10.5.0.0/16
     * Resource Group: SpokeA
