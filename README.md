@@ -116,7 +116,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
 
 1. Create a Resource Group named SpokePCI
 ![image](./images/3aPCI.png)
-1. Create a Virtual Network in the Hub Resource Group
+1. Create a Virtual Network in the SpokePCI Resource Group
     * Name: vn-spokepci
     * Address Space: 10.6.0.0/16
     * Resource Group: SpokePCI
@@ -303,7 +303,7 @@ Create an Enterprise Hybrid Network with a Hub and Spoke Topology in the Azure P
     * Resource Group: OnPrem
     * Location: South Central US
 ![image](./images/6a.png)
-    * Navigate to Hub Resource Group > nsg-onprem-back 
+    * Navigate to OnPrem Resource Group > nsg-onprem-back 
     * Click on Subnets > + Associate  
 ![image](./images/6b.png)
     * Virtual Network: vn-onprem
